@@ -3,7 +3,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { PostResponseDto } from './dto/post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 
 interface CreatePostParams {

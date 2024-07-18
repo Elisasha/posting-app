@@ -5,8 +5,6 @@ import { PostService } from './post.service';
 import { PostResponseDto } from './dto/post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { User } from 'src/user/decorators/user.decorator'
-import { UserType } from 'src/user/decorators/user.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';

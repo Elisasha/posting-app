@@ -1,4 +1,3 @@
-import { Optional } from "@nestjs/common"
 import { IsOptional, IsString, MaxLength, IsNotEmpty } from "class-validator"
 
 export class UpdatePostDto {
