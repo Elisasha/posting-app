@@ -13,13 +13,13 @@ export class PostController {
     constructor(private readonly postService: PostService){}
 
     @Post()
-    createPost(@Body() body: CreatePostDto, @User() user: UserType) {
+    create(@Body() body: CreatePostDto, @User() user: UserType) {
         return this.postService.createPost(body, user.id)
     }
 
     @Get()
     findAll(): Promise<PostResponseDto[]> {
-        return this.postService.getPosts()
+        return this.postService.getAllPosts()
     }
 
     @Get(':id')
@@ -28,13 +28,14 @@ export class PostController {
     }
 
     @Put(':id')
-    update(@Request() req, @Param('id', ParseIntPipe) postId: number, @Body() updatePostDto: UpdatePostDto) {
-        return this.postService.update(+req.user.id, postId, updatePostDto)
+    update(@Param('id', ParseIntPipe) postId: number,
+        @Body() body: UpdatePostDto, @User() user: UserType,) {
+        return this.postService.updatePost(postId, body, user.id)
     }
 
     @Delete(':id')
-    remove(@Param('id', ParseIntPipe) id: number) {
-        return this.postService.remove(id)
+    remove(@Param('id', ParseIntPipe) id: number, @User() user: UserType) {
+        return this.postService.removePost(id, user.id)
     }
 
 }

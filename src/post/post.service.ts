@@ -12,7 +12,7 @@ interface CreatePostParams {
 @Injectable()
 export class PostService {
     constructor(private readonly prismaService: PrismaService) { }
-    async getPosts(): Promise<PostResponseDto[]> {
+    async getAllPosts(): Promise<PostResponseDto[]> {
         const posts = await this.prismaService.post.findMany()
         return posts.map((post) => new PostResponseDto(post))
     }
@@ -34,7 +34,7 @@ export class PostService {
         })
     }
 
-    async update(userId: number, postId: number, updatePostDto: UpdatePostDto) {
+    async updatePost(postId: number, updatePostDto: UpdatePostDto, userId: number) {
         const post = await this.findPostById(postId)
         if (post.userId !== userId) {
             throw new ForbiddenException('You are not allowed to edit this post')
@@ -46,8 +46,11 @@ export class PostService {
         });
     }
 
-    async remove(id: number) {
+    async removePost(id: number, userId: number) {
         const post = await this.findPostById(id)
+        if (post.userId !== userId) {
+            throw new ForbiddenException('You are not allowed to edit this post')
+        }
         if (!post) {
             throw new NotFoundException('Post not found')
         }
