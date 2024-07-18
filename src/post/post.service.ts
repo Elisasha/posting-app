@@ -17,10 +17,10 @@ export class PostService {
         return posts.map((post) => new PostResponseDto(post))
     }
 
-    async create(createPostDto: CreatePostDto, userId: number) {
+    async createPost(dto: CreatePostDto, userId: number) {
         return this.prismaService.post.create({
             data: {
-                ...createPostDto,
+                ...dto,
                 userId: userId
             }
         })

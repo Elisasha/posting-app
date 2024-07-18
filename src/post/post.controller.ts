@@ -5,14 +5,15 @@ import { PostService } from './post.service';
 import { PostResponseDto } from './dto/post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { User } from 'src/user/decorators/user.decorator'
 
 @Controller('posts')
 export class PostController {
     constructor(private readonly postService: PostService){}
 
     @Post()
-    create(@Request() req, @Body() createPostDto: CreatePostDto) {
-        return this.postService.create(createPostDto, req.user.userId)
+    createPost(@Body() body: CreatePostDto, @User() user) {
+        return this.postService.createPost(body, user.id)
     }
 
     @Get()
