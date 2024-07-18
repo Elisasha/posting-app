@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PostResponseDto } from './dto/post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -44,6 +44,18 @@ export class PostService {
             where: { id: postId },
             data: updatePostDto,
         });
-      }
+    }
+
+    async remove(id: number) {
+        const post = await this.findPostById(id)
+        if (!post) {
+            throw new NotFoundException('Post not found')
+        }
+        await this.prismaService.post.delete({
+            where: {
+                id
+            }
+        })
+    }
 
 }

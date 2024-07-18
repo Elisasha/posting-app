@@ -31,7 +31,8 @@ export class PostController {
     }
 
     @Delete(':id')
-    remove() {    
+    remove(@Param('id', ParseIntPipe) id: number) {
+        return this.postService.remove(id)
     }
 
 }
