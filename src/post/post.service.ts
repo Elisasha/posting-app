@@ -17,13 +17,13 @@ export class PostService {
         return posts.map((post) => new PostResponseDto(post))
     }
 
-    create(createPostDto: CreatePostDto, userId: number) {
-            return this.prismaService.post.create({
-                data: {
-                    ...createPostDto,
-                    userId: userId
-                }
-            })
+    async create(createPostDto: CreatePostDto, userId: number) {
+        return this.prismaService.post.create({
+            data: {
+                ...createPostDto,
+                userId: userId
+            }
+        })
     }
 
     async findOne(id: number) {
