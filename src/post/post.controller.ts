@@ -20,7 +20,7 @@ export class PostController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: number) {
+    findOne(@Param('id', ParseIntPipe) id: number) {
         return this.postService.findOne(id)
     }
 
