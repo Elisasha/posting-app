@@ -32,15 +32,19 @@ export class PostController {
         return this.postService.findPostById(id)
     }
 
+    @Roles(Role.USER)
+    @UseGuards(AuthGuard)
     @Put(':id')
     update(@Param('id', ParseIntPipe) postId: number,
-        @Body() body: UpdatePostDto, @User() user: UserType,) {
-        return this.postService.updatePost(postId, body, user.id)
+        @Body() body: UpdatePostDto, @Request() req) {
+        return this.postService.updatePost(postId, body, req)
     }
 
+    @Roles(Role.ADMIN, Role.USER)
+    @UseGuards(AuthGuard)
     @Delete(':id')
-    remove(@Param('id', ParseIntPipe) id: number, @User() user: UserType) {
-        return this.postService.removePost(id, user.id)
+    remove(@Param('id', ParseIntPipe) id: number, @Request() req) {
+        return this.postService.removePost(id, req)
     }
 
 }

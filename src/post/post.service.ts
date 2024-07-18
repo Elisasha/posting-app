@@ -3,6 +3,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { PostResponseDto } from './dto/post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { Role } from '@prisma/client';
 
 interface CreatePostParams {
     title: string
@@ -17,38 +19,44 @@ export class PostService {
         return posts.map((post) => new PostResponseDto(post))
     }
 
-    async createPost(dto: CreatePostDto, userId: number) {
+    async createPost(dto: CreatePostDto, req) {
         return this.prismaService.post.create({
             data: {
                 ...dto,
-                userId: userId
+                userId: req.userId
             }
         })
     }
 
     async findPostById(id: number) {
-        return this.prismaService.post.findUnique({
+        const post = await this.prismaService.post.findUnique({
             where: {
                 id: id
             }
         })
+        if (!post) {
+            throw new NotFoundException('This post doesn\'t exist')
+        }
+        return post
     }
 
-    async updatePost(postId: number, updatePostDto: UpdatePostDto, userId: number) {
+    async updatePost(postId: number, updatePostDto: UpdatePostDto, req) {
         const post = await this.findPostById(postId)
+        const userId = req.user.id
         if (post.userId !== userId) {
             throw new ForbiddenException('You are not allowed to edit this post')
         }
-
         return this.prismaService.post.update({
             where: { id: postId },
             data: updatePostDto,
         });
     }
 
-    async removePost(id: number, userId: number) {
+    async removePost(id: number, req) {
         const post = await this.findPostById(id)
-        if (post.userId !== userId) {
+        const role = req.userRole
+        const userId = req.userId
+        if (post.userId !== userId && role !== Role.ADMIN) {
             throw new ForbiddenException('You are not allowed to edit this post')
         }
         if (!post) {
@@ -60,5 +68,4 @@ export class PostService {
             }
         })
     }
-
 }
