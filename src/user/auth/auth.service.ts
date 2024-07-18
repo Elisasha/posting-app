@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 interface Params {
@@ -15,5 +15,9 @@ export class AuthService {
                 email
             }
         })
+
+        if (userExists) {
+            throw new ConflictException('User with the provided email already exists')
+        }
     }
 }
