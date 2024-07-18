@@ -1,9 +1,10 @@
 import {
-    Controller, Post, Get, Put, Delete, Body, Request, Param
+    Controller, Post, Get, Put, Delete, Body, Request, Param, ParseIntPipe
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { PostResponseDto } from './dto/post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('posts')
 export class PostController {
@@ -25,7 +26,8 @@ export class PostController {
     }
 
     @Put(':id')
-    update() {
+    update(@Request() req, @Param('id', ParseIntPipe) postId: number, @Body() updatePostDto: UpdatePostDto) {
+        return this.postService.update(+req.user.id, postId, updatePostDto)
     }
 
     @Delete(':id')
