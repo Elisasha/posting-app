@@ -7,3 +7,11 @@ export class RegisterDto {
     @IsString() @MinLength(5)
     password: string
 }
+
+export class LoginDto {
+    @IsEmail()
+    email: string
+    
+    @IsString()
+    password: string
+}
