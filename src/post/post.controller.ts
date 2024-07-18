@@ -20,8 +20,8 @@ export class PostController {
     }
 
     @Get(':id')
-    findOne() {
-        return {'exist obj': 'obj'}
+    findOne(@Param('id') id: number) {
+        return this.postService.findOne(id)
     }
 
     @Put(':id')

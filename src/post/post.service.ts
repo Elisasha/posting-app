@@ -25,4 +25,11 @@ export class PostService {
             })
     }
 
+    async findOne(id: number) {
+        return this.prismaService.post.findUnique({
+            where: {
+                id: id
+            }
+        })
+    }
 }
