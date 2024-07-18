@@ -6,13 +6,14 @@ import { PostResponseDto } from './dto/post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User } from 'src/user/decorators/user.decorator'
+import { UserType } from 'src/user/decorators/user.decorator';
 
 @Controller('posts')
 export class PostController {
     constructor(private readonly postService: PostService){}
 
     @Post()
-    createPost(@Body() body: CreatePostDto, @User() user) {
+    createPost(@Body() body: CreatePostDto, @User() user: UserType) {
         return this.postService.createPost(body, user.id)
     }
 
