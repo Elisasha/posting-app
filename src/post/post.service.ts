@@ -26,7 +26,7 @@ export class PostService {
         })
     }
 
-    async findOne(id: number) {
+    async findPostById(id: number) {
         return this.prismaService.post.findUnique({
             where: {
                 id: id
@@ -35,7 +35,7 @@ export class PostService {
     }
 
     async update(userId: number, postId: number, updatePostDto: UpdatePostDto) {
-        const post = await this.findOne(postId)
+        const post = await this.findPostById(postId)
         if (post.userId !== userId) {
             throw new ForbiddenException('You are not allowed to edit this post')
         }
