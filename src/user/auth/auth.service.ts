@@ -8,6 +8,8 @@ interface Params {
     password: string
 }
 
+export const saltOrRounds = 8
+
 @Injectable()
 export class AuthService {
     constructor(private readonly prismaService: PrismaService) {}
@@ -21,17 +23,13 @@ export class AuthService {
         if (userExists) {
             throw new ConflictException('User with the provided email already exists')
         }
-
-        const saltOrRounds = 8
         const hashedPassword = await bcrypt.hash(password, saltOrRounds)
-
         const user = await this.prismaService.user.create({
             data: {
                 email,
                 password: hashedPassword,
             }
         })
-
         return this.generateJWT(user.id)
     }
 
@@ -51,7 +49,6 @@ export class AuthService {
         if (!isValidPasssword) {
             throw new UnauthorizedException('Invalid credentials')
         }
-
         return this.generateJWT(user.id)
     }
 
