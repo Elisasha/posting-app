@@ -16,6 +16,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { PostResponseDto } from './dto/post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostService } from './post.service';
+import { PostOwnerGuard } from 'src/guards/post-owner.guard';
 
 @Controller('posts')
 export class PostController {
@@ -39,18 +40,18 @@ export class PostController {
     }
 
     @Roles(Role.USER)
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, PostOwnerGuard)
     @Put(':id')
     update(@Param('id', ParseIntPipe) postId: number,
-        @Body() body: UpdatePostDto, @Request() req) {
-        return this.postService.updatePost(postId, body, req)
+        @Body() body: UpdatePostDto) {
+        return this.postService.updatePost(postId, body)
     }
 
     @Roles(Role.ADMIN, Role.USER)
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, PostOwnerGuard)
     @Delete(':id')
-    remove(@Param('id', ParseIntPipe) id: number, @Request() req) {
-        return this.postService.removePost(id, req)
+    remove(@Param('id', ParseIntPipe) id: number) {
+        return this.postService.removePost(id)
     }
 
 }
