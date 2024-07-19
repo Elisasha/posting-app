@@ -1,6 +1,8 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserResponseDto } from './dtos/user-response.dto';
+import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 
 @Injectable()
@@ -24,4 +26,24 @@ export class UserService {
         return new UserResponseDto(user)
     }
 
+    async updateUser(userId: number, dto: UpdateUserDto) {
+        const user = await this.findUserById(userId)
+        const saltOrRounds = 8
+        const hashedPassword = await bcrypt.hash(dto.password, saltOrRounds)
+        dto.password = hashedPassword
+        
+        return this.prismaService.user.update({
+            where: { id: userId },
+            data: dto,
+        });
+    }
+
+    async removeUser(id: number) {
+        const user = await this.findUserById(id)
+        await this.prismaService.user.delete({
+            where: {
+                id: user.id
+            }
+        })
+    }
 }
