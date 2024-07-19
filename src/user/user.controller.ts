@@ -25,6 +25,13 @@ export class UserController {
         return this.userService.findUserById(id)
     }
 
+    @Roles(Role.ADMIN, Role.USER)
+    @UseGuards(AuthGuard, UserOwnerGuard)
+    @Put(':id')
+    update(@Param('id', ParseIntPipe) userId: number,
+        @Body() body: UpdateUserDto) {
+        return this.userService.updateUser(userId, body)
+    }
 
 
 
