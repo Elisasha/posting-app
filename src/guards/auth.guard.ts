@@ -26,19 +26,23 @@ export class AuthGuard implements CanActivate {
             try {
                 const payload = (jwt.verify(token, process.env.JWT_KEY)) as JWTPayload
                 const user = await this.prismaService.user.findUnique({
+                    include: {
+                        posts: true,
+                      },
                     where: {
                         id: payload.id
                     }
                 })
-
                 if (!user) return false
+                const postIds = user.posts.map(post => post.id)
                 if (roles.includes(user.role)) {
                     request.userRole = user.role
                     request.userId = user.id
+                    request.userPostIds = postIds
                     return true
                 }
-
             } catch (error) {
+                // TODO add message
                 return false
             }
         }
