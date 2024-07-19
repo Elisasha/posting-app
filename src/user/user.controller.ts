@@ -29,16 +29,16 @@ export class UserController {
     @Roles(Role.ADMIN, Role.USER)
     @UseGuards(AuthGuard, UserOwnerGuard)
     @Put(':id')
-    update(@Param('id', ParseIntPipe) userId: number,
+    update(@Param('id', ParseIntPipe) id: number,
         @Body() body: UpdateUserDto) {
-        return this.userService.updateUser(userId, body)
+        return this.userService.updateUser(id, body)
     }
 
     @Roles(Role.ADMIN, Role.USER)
     @UseGuards(AuthGuard, UserOwnerGuard)
     @Delete(':id')
-    remove(@Param('id', ParseIntPipe) userId: number) {
-        return this.userService.removeUser(userId)
+    remove(@Param('id', ParseIntPipe) id: number) {
+        return this.userService.removeUser(id)
     }
 
 }

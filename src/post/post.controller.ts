@@ -42,9 +42,9 @@ export class PostController {
     @Roles(Role.USER)
     @UseGuards(AuthGuard, PostOwnerGuard)
     @Put(':id')
-    update(@Param('id', ParseIntPipe) postId: number,
+    update(@Param('id', ParseIntPipe) id: number,
         @Body() body: UpdatePostDto) {
-        return this.postService.updatePost(postId, body)
+        return this.postService.updatePost(id, body)
     }
 
     @Roles(Role.ADMIN, Role.USER)

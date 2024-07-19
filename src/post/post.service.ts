@@ -39,8 +39,8 @@ export class PostService {
         return post
     }
 
-    async updatePost(postId: number, updatePostDto: UpdatePostDto) {
-        const post = await this.findPostById(postId)
+    async updatePost(id: number, updatePostDto: UpdatePostDto) {
+        const post = await this.findPostById(id)
         return this.prismaService.post.update({
             where: { id: post.id },
             data: updatePostDto,

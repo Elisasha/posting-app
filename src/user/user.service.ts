@@ -34,14 +34,12 @@ export class UserService {
         return new UserResponseDto(user)
     }
 
-    async updateUser(userId: number, dto: UpdateUserDto) {
-        const user = await this.findUserById(userId)
-        const saltOrRounds = 8
+    async updateUser(id: number, dto: UpdateUserDto) {
+        const user = await this.findUserById(id)
         const hashedPassword = await bcrypt.hash(dto.password, saltOrRounds)
         dto.password = hashedPassword
-        
         return this.prismaService.user.update({
-            where: { id: userId },
+            where: { id: user.id },
             data: dto,
         });
     }
