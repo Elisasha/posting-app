@@ -18,7 +18,12 @@ export class UserController {
         return this.userService.getAllUsers()
     }
 
-    
+    @Roles(Role.ADMIN, Role.USER)
+    @UseGuards(AuthGuard, UserOwnerGuard)
+    @Get(':id')
+    findOne(@Param('id', ParseIntPipe) id: number) {
+        return this.userService.findUserById(id)
+    }
 
 
 
