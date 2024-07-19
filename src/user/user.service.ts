@@ -10,12 +10,19 @@ export class UserService {
     constructor(private readonly prismaService: PrismaService) { }
 
     async getAllUsers(): Promise<UserResponseDto[]> {
-        const users = await this.prismaService.user.findMany()
+        const users = await this.prismaService.user.findMany({
+            include: {
+              posts: true,
+            },
+          });
         return users.map((user) => new UserResponseDto(user))
     }
 
     async findUserById(id: number) {
         const user = await this.prismaService.user.findUnique({
+            include: {
+                posts: true,
+              },
             where: {
                 id: id
             }
