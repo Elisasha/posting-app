@@ -1,13 +1,21 @@
 import {
-    Controller, Post, Get, Put, Delete, Body, Request, Param, ParseIntPipe, UseGuards
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param, ParseIntPipe,
+    Post,
+    Put,
+    Request,
+    UseGuards
 } from '@nestjs/common';
-import { PostService } from './post.service';
-import { PostResponseDto } from './dto/post.dto';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
+import { Roles } from 'src/decorators/roles.decorator';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { CreatePostDto } from './dto/create-post.dto';
+import { PostResponseDto } from './dto/post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
+import { PostService } from './post.service';
 
 @Controller('posts')
 export class PostController {

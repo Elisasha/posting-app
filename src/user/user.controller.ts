@@ -1,12 +1,11 @@
-import { Controller, UseGuards, ParseIntPipe, Param, Request, Put, Body, Delete } from '@nestjs/common';
-import { UserService } from './user.service';
-import { Get } from '@nestjs/common'
-import { UserResponseDto } from './dtos/user-response.dto';
-import { Roles } from 'src/decorators/roles.decorator';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Put, UseGuards } from '@nestjs/common';
 import { Role } from '@prisma/client';
+import { Roles } from 'src/decorators/roles.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
-import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserOwnerGuard } from 'src/guards/user-owner.guard';
+import { UpdateUserDto } from './dtos/update-user.dto';
+import { UserResponseDto } from './dtos/user-response.dto';
+import { UserService } from './user.service';
 
 
 @Controller('users')

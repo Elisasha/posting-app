@@ -1,4 +1,3 @@
-import { Role } from "@prisma/client"
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class UpdateUserDto {
