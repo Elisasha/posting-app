@@ -39,32 +39,21 @@ export class PostService {
         return post
     }
 
-    async updatePost(postId: number, updatePostDto: UpdatePostDto, req) {
+    async updatePost(postId: number, updatePostDto: UpdatePostDto) {
         const post = await this.findPostById(postId)
-        const userId = req.user.id
-        if (post.userId !== userId) {
-            throw new ForbiddenException('You are not allowed to edit this post')
-        }
         return this.prismaService.post.update({
-            where: { id: postId },
+            where: { id: post.id },
             data: updatePostDto,
         });
     }
 
-    async removePost(id: number, req) {
+    async removePost(id: number) {
         const post = await this.findPostById(id)
-        const role = req.userRole
-        const userId = req.userId
-        if (post.userId !== userId && role !== Role.ADMIN) {
-            throw new ForbiddenException('You are not allowed to edit this post')
-        }
-        if (!post) {
-            throw new NotFoundException('Post not found')
-        }
         await this.prismaService.post.delete({
             where: {
                 id
             }
         })
+        return 'Succesfully deleted post ${post.id}'
     }
 }
