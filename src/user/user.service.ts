@@ -51,5 +51,6 @@ export class UserService {
                 id: user.id
             }
         })
+        return `Succesfully deleted user ${id}`
     }
 }

@@ -49,6 +49,6 @@ export class PostService {
                 id
             }
         })
-        return 'Succesfully deleted post ${post.id}'
+        return `Succesfully deleted post ${post.id}`
     }
 }
