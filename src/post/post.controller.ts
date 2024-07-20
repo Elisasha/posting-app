@@ -22,7 +22,6 @@ import { PostOwnerGuard } from 'src/guards/post-owner.guard';
 export class PostController {
     constructor(private readonly postService: PostService){}
 
-    @Roles(Role.ADMIN, Role.USER)
     @UseGuards(AuthGuard)
     @Post()
     create(@Body() body: CreatePostDto, @Request() req) {
@@ -39,7 +38,6 @@ export class PostController {
         return this.postService.findPostById(id)
     }
 
-    @Roles(Role.USER)
     @UseGuards(AuthGuard, PostOwnerGuard)
     @Put(':id')
     update(@Param('id', ParseIntPipe) id: number,
@@ -47,7 +45,7 @@ export class PostController {
         return this.postService.updatePost(id, body)
     }
 
-    @Roles(Role.ADMIN, Role.USER)
+    @Roles(Role.ADMIN)
     @UseGuards(AuthGuard, PostOwnerGuard)
     @Delete(':id')
     remove(@Param('id', ParseIntPipe) id: number) {
