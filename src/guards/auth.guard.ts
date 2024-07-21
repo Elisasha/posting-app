@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import * as jwt from "jsonwebtoken";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 
 interface JWTPayload {
     id: number, iat: number, exp: number
@@ -35,7 +35,6 @@ export class AuthGuard implements CanActivate {
                     return true   
                 }
             } catch (error) {
-                // TODO add message
                 return false
             }
         }
