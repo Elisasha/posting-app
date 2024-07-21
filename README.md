@@ -26,6 +26,11 @@
 
 Backend NestJS application with integrated Prisma ORM for managing user and posts instances(relation one to many) using PostgreSQL as the database.
 In project implemented JWT authentication and role-model access to endpoints: as admin and as regular user. There're implemented CRUD operations for this instances.
+##
+You will need:
+NPM
+NODE.js
+Docker
 
 ## Installation
 
@@ -34,15 +39,6 @@ $ npm install
 ```
 ## Setting up environment
 
-### Run Posgres db
-```bash
-$ docker compose up
-```
-
-### Create database tables according to Prisma model
-```bash
-$ npx prisma migrate dev --name init
-```
 ### Setup .env file
 In the root directory create file .env. You can use .env.example as a base.
 Provide values for all listed variables in this file.
@@ -52,6 +48,16 @@ POSTGRES_PASSWORD=
 DATABASE_URL=
 PORT=
 JWT_KEY=
+```
+
+### Run Posgres db
+```bash
+$ docker compose up
+```
+
+### Create database tables according to Prisma model
+```bash
+$ npx prisma migrate dev --name init
 ```
 
 ## Running the app
@@ -73,9 +79,4 @@ There're implemented only tests for Authentication service (user.service.spec.ts
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
