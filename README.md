@@ -24,12 +24,36 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Backend NestJS application with integrated Prisma ORM for managing user and posts instances(relation one to many) using PostgreSQL as the database.
+In project implemented JWT authentication and role-model access to endpoints: as admin and as regular user. There're implemented CRUD operations for this instances.
 
 ## Installation
 
 ```bash
 $ npm install
+```
+## Setting up environment
+
+### Run Posgres db
+```bash
+$ docker compose up
+```
+It will 
+
+### Create database tables according to Prisma model
+```bash
+$ npx prisma migrate dev --name init
+```
+### Setup .env file
+In the root directory create file .env. You can use .env.example as a base.
+Provide values for all listed variables in this file.
+```bash
+$ 
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+DATABASE_URL=
+PORT=
+JWT_KEY=
 ```
 
 ## Running the app
@@ -41,11 +65,11 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
 ## Test
+
+There're implemented inly tests for Authentication service (user.service.spec.ts) and controller(user.controller.spec.ts).
 
 ```bash
 # unit tests
@@ -57,17 +81,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
