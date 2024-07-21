@@ -9,14 +9,3 @@ services:
       - '5432:5432'
     env_file:
       - .env
-  
-  app_server:
-    build:
-      dockerfile: Dockerfile
-      context: .
-    env_file: .env
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    depends_on:
-      - postgres
