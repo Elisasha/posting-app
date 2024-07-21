@@ -67,7 +67,7 @@ $ npm run start:dev
 
 ## Test
 
-There're implemented inly tests for Authentication service (user.service.spec.ts) and controller(user.controller.spec.ts).
+There're implemented only tests for Authentication service (user.service.spec.ts) and controller(user.controller.spec.ts).
 
 ```bash
 # unit tests
