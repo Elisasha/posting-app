@@ -38,7 +38,6 @@ $ npm install
 ```bash
 $ docker compose up
 ```
-It will 
 
 ### Create database tables according to Prisma model
 ```bash
@@ -48,7 +47,6 @@ $ npx prisma migrate dev --name init
 In the root directory create file .env. You can use .env.example as a base.
 Provide values for all listed variables in this file.
 ```bash
-$ 
 POSTGRES_USER=
 POSTGRES_PASSWORD=
 DATABASE_URL=
