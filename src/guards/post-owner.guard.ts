@@ -1,14 +1,12 @@
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Inject, Injectable, forwardRef } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { PrismaService } from "src/prisma/prisma.service";
+import { RoleGuard } from './role.guard';
 
 
 @Injectable()
 export class PostOwnerGuard implements CanActivate {
-    constructor(
-        private reflector: Reflector,
-        private readonly prismaService: PrismaService)
-    { }
+    constructor(private reflector: Reflector,
+        private roleGuard: RoleGuard) { }
 
     async canActivate(context: ExecutionContext) {
         const request = context.switchToHttp().getRequest()
@@ -19,13 +17,6 @@ export class PostOwnerGuard implements CanActivate {
             return true 
         }
         else {
-            const roles = this.reflector.getAllAndOverride('roles', [
-                context.getHandler(),
-                context.getClass()
-            ])
-            if (roles?.length) {
-                return roles.includes(request.userRole)
-            }
-        }
+            return this.roleGuard.canActivate(context)        }
     }
 }
