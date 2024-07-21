@@ -1,5 +1,4 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
 import * as jwt from "jsonwebtoken";
 import { PrismaService } from "src/prisma/prisma.service";
 
@@ -10,7 +9,6 @@ interface JWTPayload {
 @Injectable()
 export class AuthGuard implements CanActivate {
     constructor(
-        private readonly reflector: Reflector,
         private readonly prismaService: PrismaService
     ) { }
     async canActivate(context: ExecutionContext) {
@@ -31,10 +29,9 @@ export class AuthGuard implements CanActivate {
                     return false
                 }
                 else {
-                    const postIds = user.posts.map(post => post.id)
                     request.userRole = user.role
                     request.userId = user.id
-                    request.userPostIds = postIds
+                    request.userPostIds = user.posts.map(post => post.id)
                     return true   
                 }
             } catch (error) {
