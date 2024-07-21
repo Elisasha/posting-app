@@ -17,6 +17,7 @@ export class PostOwnerGuard implements CanActivate {
             return true 
         }
         else {
-            return this.roleGuard.canActivate(context)        }
+            return this.roleGuard.canActivate(context)
+        }
     }
 }
